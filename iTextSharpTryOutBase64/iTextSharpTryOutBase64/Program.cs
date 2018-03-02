@@ -5,9 +5,13 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText;
 
+
+
 using System.Text;
 using iText.Kernel.Geom;
-
+using iText.Forms;
+using System.Collections.Generic;
+using iText.Forms.Fields;
 
 namespace iTextSharpTryOutBase64
 {
@@ -16,7 +20,7 @@ namespace iTextSharpTryOutBase64
     {
         public const String DEST = "results/chapter01/hello_world.pdf";
 
-        public const String DEST_INPUT = "results/chapter01/raw2.txt";
+        public const String DEST_INPUT = "results/chapter01/raw_job.txt";
         public const String DEST_OUT = "results/chapter01/someOUTPUT2.pdf";
         public const String DEST_OUT_RAW = "results/chapter01/output_raw.txt";
 
@@ -29,7 +33,7 @@ namespace iTextSharpTryOutBase64
             //new C01E01_HelloWorld().CreatePdf(DEST);
             new C01E01_HelloWorld().readBase64StringOutputAsPDF();
 
-            //Console.ReadLine();
+            Console.ReadLine();
         }
         public virtual void CreatePdf(String dest)
         {
@@ -110,9 +114,39 @@ namespace iTextSharpTryOutBase64
                             using (Document doc = new Document(pdfdoc))
                             {
                                 doc.Add(new Paragraph("_____________________________________________!!!"));
-                                doc.Add(new Paragraph("______________________________---------EY 1!"));
-                                doc.Add(new Paragraph("______________________________~~~~~~~~~ahah cool EY 1!"));
-                                doc.Add(new Paragraph("______________________________´´´´´´´´´hah cool EY 1!"));                                
+                                //doc.Add(new Paragraph("______________________________---------EY 1!"));
+                                //doc.Add(new Paragraph("______________________________~~~~~~~~~ahah cool EY 1!"));
+                                //doc.Add(new Paragraph("______________________________´´´´´´´´´hah cool EY 1!"));
+
+
+                                //Initialize PDF document
+                                PdfAcroForm form = PdfAcroForm.GetAcroForm(pdfdoc, true);
+                                IDictionary<String, PdfFormField> fields = form.GetFormFields();
+                                PdfFormField toSet;
+                                fields.TryGetValue("name", out toSet);
+                                Console.WriteLine(toSet.GetValue());
+                                toSet.SetValue("James Bond");
+                                fields["name"].SetValue("007");
+                                Console.WriteLine(toSet.GetValue());
+                                fields.TryGetValue("language", out toSet);
+                                //toSet.SetValue("English");
+                                Console.WriteLine(toSet.GetValue());
+                                fields.TryGetValue("experience1", out toSet);
+                                Console.WriteLine(toSet.GetValue());
+                                toSet.SetValue("Off");
+                                fields.TryGetValue("experience2", out toSet);
+                                Console.WriteLine(toSet.GetValue());
+                                toSet.SetValue("Yes");
+                                fields.TryGetValue("experience3", out toSet);
+                                Console.WriteLine(toSet.GetValue());
+                                toSet.SetValue("Yes");
+                                fields.TryGetValue("shift", out toSet);
+                                Console.WriteLine(toSet.GetValue());
+                                toSet.SetValue("Any");
+                                fields.TryGetValue("info", out toSet);
+                                Console.WriteLine(toSet.GetValue());
+                                toSet.SetValue("I was 38 years old when I became an MI6 agent.");
+                                pdfdoc.Close();
 
                                 doc.Close();
                             }
@@ -120,7 +154,7 @@ namespace iTextSharpTryOutBase64
                     }
                 }
                 //Console.WriteLine("PDF to byte array to ANSI to console");
-                Console.WriteLine(Encoding.Default.GetString(memStream.ToArray()));
+                //Console.WriteLine(Encoding.Default.GetString(memStream.ToArray()));
                 //return myoutPDF.ToArray();
 
                 using (StreamWriter outputFile = new StreamWriter(DEST_OUT_RAW))
