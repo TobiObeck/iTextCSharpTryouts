@@ -1,0 +1,9 @@
+//for a new console application
+dotnet new console
+
+dotnet build
+dotnet run
+//run notices changes automatically in case the files are saved
+
+//after adding a new package in the project config
+dotnet restore
