@@ -10,6 +10,7 @@ namespace randomUserRest_tryout
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
