@@ -1,3 +1,6 @@
+https://docs.microsoft.com/de-de/dotnet/csharp/tutorials/console-webapiclient
+https://api.github.com/orgs/dotnet/repos
+
 //for a new console application
 dotnet new console
 
